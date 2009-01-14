@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource>
+  <object class="wxDialog" name="UDP_RECEIVER_DIALOG">
+    <title>FlyTrax sendto hosts</title>
+    <object class="wxBoxSizer">
+      <orient>wxHORIZONTAL</orient>
+      <object class="sizeritem">
+        <object class="wxListBox" name="UDP_RECEIVER_LIST">
+          <content/>
+          <style>wxLB_SINGLE</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxButton" name="UDP_ADD">
+              <label>Add...</label>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="UDP_EDIT">
+              <label>Edit...</label>
+              <enabled>0</enabled>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="UDP_REMOVE">
+              <label>Remove</label>
+            </object>
+          </object>
+        </object>
+      </object>
+    </object>
+  </object>
+  <object class="wxFrame" name="SphereTrax_FRAME">
+    <title>SphereTrax</title>
+    <object class="wxPanel" name="SphereTrax_PANEL">
+      <object class="wxBoxSizer">
+        <orient>wxVERTICAL</orient>
+        <object class="sizeritem">
+          <object class="wxBoxSizer">
+            <orient>wxHORIZONTAL</orient>
+            <object class="sizeritem">
+              <object class="wxNotebook" name="SphereTrax_NOTEBOOK">
+                <object class="notebookpage">
+                  <label>Optic Flow</label>
+                  <object class="wxPanel" name="Optic_Flow_PANEL">
+                    <style></style>
+                    <object class="wxFlexGridSizer">
+                      <cols>1</cols>
+                      <rows>4</rows>
+                      <object class="sizeritem">
+                        <object class="wxFlexGridSizer">
+                          <cols>1</cols>
+                          <rows>2</rows>
+                          <object class="spacer">
+                            <size>10,10</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxCheckBox" name="Optic_Flow_Enable_CHECKBOX">
+                              <label>enable</label>
+                            </object>
+                            <option>1</option>
+                            <flag>wxLEFT</flag>
+                          </object>
+                        </object>
+                        <option>1</option>
+                        <flag>wxLEFT</flag>
+                        <border>20</border>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxFlexGridSizer">
+                          <cols>5</cols>
+                          <rows>3</rows>
+                          <object class="spacer">
+                            <size>0,10</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>0,0</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>0,0</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>0,0</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>0,0</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>Number of rows</label>
+                              <style></style>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                            <border>50</border>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinCtrl" name="Num_Row_SPINCTRL">
+                              <value>1</value>
+                              <min>1</min>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>40,30</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>Number of columns</label>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinCtrl" name="Num_Col_SPINCTRL">
+                              <value>4</value>
+                              <min>1</min>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>Window size</label>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxSpinCtrl" name="Window_Size_SPINCTRL">
+                              <value>20</value>
+                              <min>3</min>
+                              <max>100</max>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="spacer">
+                            <size>40,30</size>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>Poll interval</label>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxTextCtrl" name="Poll_Interval_TEXTCTRL">
+                              <value>.015</value>
+                              <style>wxTE_PROCESS_ENTER</style>
+                            </object>
+                            <option>1</option>
+                            <flag></flag>
+                          </object>
+                          <vgap>10</vgap>
+                          <hgap>10</hgap>
+                        </object>
+                        <option>1</option>
+                        <flag>wxTOP|wxLEFT</flag>
+                        <border>20</border>
+                      </object>
+                      <object class="spacer">
+                        <size>10,60</size>
+                        <option>1</option>
+                        <flag></flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxFlexGridSizer">
+                          <cols>3</cols>
+                          <rows>1</rows>
+                          <object class="sizeritem">
+                            <object class="wxFlexGridSizer">
+                              <cols>1</cols>
+                              <rows>5</rows>
+                              <object class="sizeritem">
+                                <object class="wxStaticText">
+                                  <label>Horizontal Spacing</label>
+                                  <style>wxALIGN_CENTRE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxALIGN_CENTRE</flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxSlider" name="Horiz_Space_SLIDER">
+                                  <value>50</value>
+                                  <min></min>
+                                  <max>100</max>
+                                  <size>250,30</size>
+                                  <style>wxSL_AUTOTICKS</style>
+                                </object>
+                                <option>1</option>
+                                <flag></flag>
+                              </object>
+                              <object class="spacer">
+                                <size>20,70</size>
+                                <option>1</option>
+                                <flag></flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxStaticText">
+                                  <label>Horizontal position</label>
+                                  <style>wxALIGN_CENTRE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxALIGN_CENTRE</flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxSlider" name="Horiz_Position_SLIDER">
+                                  <value>50</value>
+                                  <min></min>
+                                  <max>100</max>
+                                  <size>250,30</size>
+                                </object>
+                                <option>1</option>
+                                <flag></flag>
+                              </object>
+                            </object>
+                            <option>1</option>
+                            <flag>wxEXPAND|wxALIGN_CENTRE</flag>
+                            <border>20</border>
+                          </object>
+                          <object class="spacer">
+                            <size>30,30</size>
+                            <option>1</option>
+                            <flag>wxEXPAND</flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxFlexGridSizer">
+                              <object class="sizeritem">
+                                <object class="wxStaticText">
+                                  <label>Vertical spacing</label>
+                                  <style>wxALIGN_CENTRE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxALIGN_CENTRE</flag>
+                              </object>
+                              <object class="spacer">
+                                <size>30,20</size>
+                                <option>1</option>
+                                <flag></flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxStaticText">
+                                  <label>Vertical position</label>
+                                  <style>wxALIGN_CENTRE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxALIGN_CENTRE</flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxSlider" name="Vert_Space_SLIDER">
+                                  <value>50</value>
+                                  <min></min>
+                                  <max>100</max>
+                                  <size>30,150</size>
+                                  <style>wxSL_VERTICAL|wxSL_INVERSE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxALIGN_CENTRE</flag>
+                              </object>
+                              <object class="spacer">
+                                <size>30,20</size>
+                                <option>1</option>
+                                <flag></flag>
+                              </object>
+                              <object class="sizeritem">
+                                <object class="wxSlider" name="Vert_Position_SLIDER">
+                                  <value>50</value>
+                                  <min></min>
+                                  <max>100</max>
+                                  <size>30,150</size>
+                                  <style>wxSL_VERTICAL|wxSL_INVERSE</style>
+                                </object>
+                                <option>1</option>
+                                <flag>wxEXPAND</flag>
+                              </object>
+                              <cols>3</cols>
+                              <rows>2</rows>
+                            </object>
+                            <option>1</option>
+                            <flag>wxALIGN_CENTRE</flag>
+                            <border>20</border>
+                          </object>
+                          <growablecols>1</growablecols>
+                        </object>
+                        <option>1</option>
+                        <flag>wxLEFT</flag>
+                        <border>40</border>
+                      </object>
+                    </object>
+                  </object>
+                  <selected>1</selected>
+                </object>
+                <object class="notebookpage">
+                  <label>Find Sphere</label>
+                  <object class="wxPanel" name="Find_Sphere_PANEL">
+                    <object class="wxFlexGridSizer">
+                      <cols>1</cols>
+                      <rows>2</rows>
+                      <growablerows>0</growablerows>
+                      <growablecols>0</growablecols>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxVERTICAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxPanel" name="Find_Sphere_Image_PANEL">
+                              <style></style>
+                            </object>
+                            <option>1</option>
+                            <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE</flag>
+                          </object>
+                        </object>
+                        <option>1</option>
+                        <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxButton" name="Grab_Image_BUTTON">
+                              <label>grab image</label>
+                            </object>
+                            <option>1</option>
+                            <flag>wxALL</flag>
+                            <border>10</border>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxButton" name="Delete_Points_BUTTON">
+                              <label>delete points</label>
+                            </object>
+                            <option>1</option>
+                            <flag>wxALL</flag>
+                            <border>10</border>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxButton" name="Find_Sphere_BUTTON">
+                              <label>find sphere</label>
+                            </object>
+                            <option>1</option>
+                            <flag>wxALL</flag>
+                            <border>10</border>
+                          </object>
+                        </object>
+                        <option>1</option>
+                        <flag>wxALL|wxEXPAND|wxALIGN_CENTRE</flag>
+                        <border>10</border>
+                        <minsize>600,20</minsize>
+                      </object>
+                    </object>
+                  </object>
+                </object>
+                <object class="notebookpage">
+                  <label>Tracking</label>
+                  <object class="wxPanel" name="Tracking_PANEL">
+                    <object class="wxFlexGridSizer">
+                      <cols>1</cols>
+                      <rows>2</rows>
+                      <object class="sizeritem">
+                        <object class="wxFlexGridSizer">
+                          <cols>1</cols>
+                          <rows>2</rows>
+                          <object class="spacer">
+                            <size>10,10</size>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxCheckBox" name="Tracking_Enable_CHECKBOX">
+                              <label>enable</label>
+                            </object>
+                            <option>1</option>
+                            <flag>wxLEFT</flag>
+                          </object>
+                        </object>
+                        <option>1</option>
+                        <flag>wxLEFT</flag>
+                        <border>20</border>
+                      </object>
+                      <growablerows>1</growablerows>
+                      <growablerows>2</growablerows>
+                      <growablerows>3</growablerows>
+                      <growablecols>0</growablecols>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxVERTICAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxPanel" name="Head_Rate_Plot_PANEL">
+                              <fg>#A020F0</fg>
+                              <bg>#A020F0</bg>
+                            </object>
+                            <option>1</option>
+                            <flag>wxTOP|wxLEFT|wxEXPAND|wxGROW</flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxPanel" name="Forw_Rate_Plot_PANEL"/>
+                            <option>1</option>
+                            <flag>wxTOP|wxLEFT|wxEXPAND|wxGROW</flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxPanel" name="Side_Rate_Plot_PANEL"/>
+                            <option>1</option>
+                            <flag>wxTOP|wxLEFT|wxEXPAND|wxGROW</flag>
+                          </object>
+                        </object>
+                        <option>1</option>
+                        <flag>wxTOP|wxLEFT|wxEXPAND|wxGROW</flag>
+                      </object>
+                    </object>
+                  </object>
+                </object>
+                <object class="notebookpage">
+                  <label>Closed Loop</label>
+                  <object class="wxPanel" name="Closed_Loop_PANEL">
+                    <object class="wxStaticBoxSizer">
+                      <label>realtime output control</label>
+                      <orient>wxHORIZONTAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxCheckBox" name="SEND_TO_IP_ENABLED">
+                          <label>send data to 0 receiver(s)</label>
+                          <checked>0</checked>
+                        </object>
+                        <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxButton" name="EDIT_UDP_RECEIVERS">
+                          <label>Edit sendto list...</label>
+                        </object>
+                        <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                      </object>
+                    </object>
+                  </object>
+                </object>
+              </object>
+              <option>1</option>
+              <flag>wxEXPAND</flag>
+            </object>
+          </object>
+          <option>1</option>
+          <flag>wxEXPAND</flag>
+        </object>
+      </object>
+    </object>
+    <size>600,450</size>
+  </object>
+</resource>

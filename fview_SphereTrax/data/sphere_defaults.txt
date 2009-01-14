@@ -1,0 +1,2 @@
+radius 6.35
+z_guess 80.0
