@@ -1,6 +1,6 @@
 import os.path
 from setuptools import setup
-version = '0.1.5'
+version = '0.1.6'
 
 setup(name='fview_SphereTrax',
       description='fview plugin to track angular velocity of a sphere',
