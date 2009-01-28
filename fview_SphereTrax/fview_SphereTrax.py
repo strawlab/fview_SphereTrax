@@ -23,8 +23,7 @@ from optic_flow import get_hfs_rates
 from scipy.optimize import fmin
 import socket  # for udp
 import struct
-import adskalman
-
+import adskalman.adskalman as adskalman
 
 RESFILE = pkg_resources.resource_filename(__name__,"fview_SphereTrax.xrc") # trigger extraction
 RES = xrc.EmptyXmlResource()
