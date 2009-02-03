@@ -29,7 +29,7 @@ RESFILE = pkg_resources.resource_filename(__name__,"fview_SphereTrax.xrc") # tri
 RES = xrc.EmptyXmlResource()
 RES.LoadFromString(open(RESFILE).read())
 
-# IDs for frame, panel, notebook and subpanels 
+# IDs for frame, panel, notebook and subpanels
 SphereTrax_FRAME = "SphereTrax_FRAME"
 SphereTrax_PANEL = "SphereTrax_PANEL"
 SphereTrax_NOTEBOOK = "SphereTrax_NOTEBOOK"
@@ -57,7 +57,7 @@ Find_Sphere_BUTTON = "Find_Sphere_BUTTON"
 
 # IDs for tracking panel controls
 Tracking_Enable_CHECKBOX = "Tracking_Enable_CHECKBOX"
-Head_Rate_Plot_PANEL = "Head_Rate_Plot_PANEL" 
+Head_Rate_Plot_PANEL = "Head_Rate_Plot_PANEL"
 Forw_Rate_Plot_PANEL = "Forw_Rate_Plot_PANEL"
 Side_Rate_Plot_PANEL = "Side_Rate_Plot_PANEL"
 
@@ -77,11 +77,11 @@ OPTIC_FLOW_DEFAULTS = {
 # Defaults values for tracking panel
 TRACKING_DEFAULTS = {
     'tracking_enable' : False,
-    'tracking_plot_poll_int' : 500, # ms 
+    'tracking_plot_poll_int' : 500, # ms
     'tracking_plot_length' : 10, # secs
     'tracking_plot_line_color' : 'blue',
     'tracking_plot_line_width' : 1,
-    
+
     }
 
 # Sphere orientation vectors
@@ -99,7 +99,7 @@ class SphereTrax_Class:
         self.line_list = []
         self.dpix_list = []
         self.lag_buf = LagList(1)
-        self.lock = threading.Lock()        
+        self.lock = threading.Lock()
         self.tracking_plot_queue = Queue.Queue(0)
         self.tracking_plot_data = []
 
@@ -132,7 +132,7 @@ class SphereTrax_Class:
         R = 5.0*numpy.eye(os)
         init_x = numpy.array([0,0,0,0,0,0],dtype=numpy.float)
         init_P = 1.0*numpy.eye(ss)
-                
+
         self.kalman = adskalman.KalmanFilter(A,C,Q,R,init_x,init_P)
         self.kalman_isinitial = 1
 
@@ -149,7 +149,7 @@ class SphereTrax_Class:
         """
         Initializes the main frame and notebook part of the GUI
         """
-        self.frame = RES.LoadFrame(self.wx_parent,SphereTrax_FRAME) 
+        self.frame = RES.LoadFrame(self.wx_parent,SphereTrax_FRAME)
         self.panel = xrc.XRCCTRL(self.frame,SphereTrax_PANEL)
         self.notebook = xrc.XRCCTRL(self.panel,SphereTrax_NOTEBOOK)
 
@@ -171,11 +171,11 @@ class SphereTrax_Class:
         self.vert_space_slider = xrc.XRCCTRL(self.optic_flow_panel,Vert_Space_SLIDER)
         self.vert_position_slider = xrc.XRCCTRL(self.optic_flow_panel,Vert_Position_SLIDER)
 
-        # Setup events for optic flow panel controls 
+        # Setup events for optic flow panel controls
         wx.EVT_CHECKBOX(self.optic_flow_enable_box, xrc.XRCID(Optic_Flow_Enable_CHECKBOX),
                         self.on_optic_flow_enable)
         wx.EVT_SPINCTRL(self.num_row_spin_ctrl, xrc.XRCID(Num_Row_SPINCTRL),
-                        self.on_num_row_spin_ctrl) 
+                        self.on_num_row_spin_ctrl)
         wx.EVT_SPINCTRL(self.num_col_spin_ctrl, xrc.XRCID(Num_Col_SPINCTRL),
                         self.on_num_col_spin_ctrl)
         wx.EVT_SPINCTRL(self.window_size_spin_ctrl, xrc.XRCID(Window_Size_SPINCTRL),
@@ -190,7 +190,7 @@ class SphereTrax_Class:
                       self.on_vert_space_slider)
         wx.EVT_SLIDER(self.vert_position_slider, xrc.XRCID(Vert_Position_SLIDER),
                       self.on_vert_position_slider)
-                      
+
         # Set default values for optic flow panel
         self.optic_flow_enable = OPTIC_FLOW_DEFAULTS['opticflow_enable']
         self.optic_flow_enable_box.SetValue(self.optic_flow_enable)
@@ -209,24 +209,24 @@ class SphereTrax_Class:
 
         self.horiz_space = OPTIC_FLOW_DEFAULTS['horiz_space']
         set_slider_value(self.horiz_space_slider, self.horiz_space)
-        
+
         self.horiz_pos = OPTIC_FLOW_DEFAULTS['horiz_pos']
         set_slider_value(self.horiz_position_slider, self.horiz_pos)
-        
+
         self.vert_space = OPTIC_FLOW_DEFAULTS['vert_space']
         set_slider_value(self.vert_space_slider, self.vert_space)
-        
+
         self.vert_pos = OPTIC_FLOW_DEFAULTS['vert_pos']
         set_slider_value(self.vert_position_slider, self.vert_pos)
-                
-        
+
+
 
     def find_sphere_panel_init(self):
         """
         Initializes find sphere notebook page of the GUI
         """
         self.find_sphere_panel = xrc.XRCCTRL(self.notebook,Find_Sphere_PANEL)
-        
+
         # Set up controls for find sphere panel
         self.find_sphere_image_panel = xrc.XRCCTRL(self.find_sphere_panel,
                                                    Find_Sphere_Image_PANEL)
@@ -245,7 +245,7 @@ class SphereTrax_Class:
         # Setup image plot panel -- copying Andrew
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.plot_panel = PlotPanel(self.find_sphere_image_panel)
-        
+
         # wx boilerplate
         sizer.Add(self.plot_panel, 1, wx.EXPAND )# |wx.TOP| wx.LEFT |wx.ALIGN_CENTER)
         self.find_sphere_image_panel.SetSizer(sizer)
@@ -264,24 +264,24 @@ class SphereTrax_Class:
         self.head_rate_sizer = wx.BoxSizer(wx.VERTICAL)
         self.forw_rate_sizer = wx.BoxSizer(wx.VERTICAL)
         self.side_rate_sizer = wx.BoxSizer(wx.VERTICAL)
-                  
+
         self.head_rate_canvas = wx.lib.plot.PlotCanvas(self.head_rate_plot_panel)
         self.forw_rate_canvas = wx.lib.plot.PlotCanvas(self.forw_rate_plot_panel)
         self.side_rate_canvas = wx.lib.plot.PlotCanvas(self.side_rate_plot_panel)
-        
+
         self.head_rate_sizer.Add(self.head_rate_canvas, 1, wx.EXPAND)
         self.forw_rate_sizer.Add(self.forw_rate_canvas, 1, wx.EXPAND)
         self.side_rate_sizer.Add(self.side_rate_canvas, 1, wx.EXPAND)
 
         self.head_rate_plot_panel.SetSizer(self.head_rate_sizer)
         self.forw_rate_plot_panel.SetSizer(self.forw_rate_sizer)
-        self.side_rate_plot_panel.SetSizer(self.side_rate_sizer)        
+        self.side_rate_plot_panel.SetSizer(self.side_rate_sizer)
 
         # Setup Timer
         ID_Timer = wx.NewId()
         self.tracking_plot_timer = wx.Timer(self.wx_parent, ID_Timer)
 
-        
+
         # Setup controls for tracking panel
         self.tracking_enable_box = xrc.XRCCTRL(self.tracking_panel,Tracking_Enable_CHECKBOX)
 
@@ -289,14 +289,14 @@ class SphereTrax_Class:
         wx.EVT_CHECKBOX(self.tracking_enable_box, xrc.XRCID(Tracking_Enable_CHECKBOX),
                       self.on_tracking_enable)
         wx.EVT_TIMER(self.wx_parent, ID_Timer, self.on_tracking_plot_timer)
-                
+
         # Set Defaults for tracking panel
         self.tracking_enable = TRACKING_DEFAULTS['tracking_enable']
         self.tracking_enable_box.SetValue(self.tracking_enable)
-        self.tracking_plot_interval = TRACKING_DEFAULTS['tracking_plot_poll_int'] 
+        self.tracking_plot_interval = TRACKING_DEFAULTS['tracking_plot_poll_int']
         self.tracking_plot_timer.Start(self.tracking_plot_interval)
-        
-        
+
+
     def closed_loop_panel_init(self):
         """
         Initializes the closed loop notebook page
@@ -304,8 +304,8 @@ class SphereTrax_Class:
         self.closed_loop_panel = xrc.XRCCTRL(self.notebook,Closed_Loop_PANEL)
 
         ########################################
-        #  copied from Flytrax  
-        
+        #  copied from Flytrax
+
         send_to_ip_enabled_widget = xrc.XRCCTRL(self.frame,"SEND_TO_IP_ENABLED")
         send_to_ip_enabled_widget.Bind( wx.EVT_CHECKBOX,
                                         self.OnEnableSendToIP)
@@ -329,7 +329,7 @@ class SphereTrax_Class:
         wx.EVT_BUTTON(ctrl,ctrl.GetId(),self.OnUDPRemove)
 
 
-    # Callbacks for optic flow page -----------------------------------------        
+    # Callbacks for optic flow page -----------------------------------------
     def on_optic_flow_enable(self, event):
         self.lock.acquire()
         widget = event.GetEventObject()
@@ -338,7 +338,7 @@ class SphereTrax_Class:
             self.timestamp_last = 0.0
             self.line_list = []
             self.dpix_list = []
-            
+
         else:
             self.optic_flow_enable = False
         print "optic_flow_enable: ", self.optic_flow_enable
@@ -375,7 +375,7 @@ class SphereTrax_Class:
             widget.SetValue(str(self.poll_int))
         print 'poll_int_text_enter: ', self.poll_int
         self.lock.release()
-        
+
     def on_horiz_space_slider(self, event):
         self.lock.acquire()
         widget = event.GetEventObject()
@@ -404,7 +404,7 @@ class SphereTrax_Class:
         print 'vert_position_slider:', self.vert_pos
         self.lock.release()
 
-    # Callbacks for find sphere page ------------------------------------------    
+    # Callbacks for find sphere page ------------------------------------------
     def on_grab_image_button(self, event):
         self.lock.acquire()
         print 'grab image -- ',
@@ -414,18 +414,18 @@ class SphereTrax_Class:
         else:
             print 'no image'
         self.lock.release()
-        
+
     def on_delete_points_button(self, event):
         self.lock.acquire()
         print 'delete points -- '
         self.plot_panel.delete_points()
         self.lock.release()
-        
+
     def on_find_sphere_button(self, event):
-        
+
         print 'find_sphere'
         pts = self.plot_panel.get_points()
-        
+
         if len(pts) < 3:
             dlg = wx.MessageDialog(self.plot_panel,
                                    'At least three boundary points require to locate sphere',
@@ -433,9 +433,9 @@ class SphereTrax_Class:
                                    wx.OK | wx.ICON_ERROR
                                    )
             dlg.ShowModal()
-            dlg.Destroy()            
+            dlg.Destroy()
             return
-        
+
         self.lock.acquire()
         # Find positon of the sphere
         self.plot_panel.sphere_pos = find_sphere_pos(self.plot_panel.cam_cal,
@@ -443,11 +443,11 @@ class SphereTrax_Class:
                                                      self.plot_panel.z_guess,
                                                      pts)
 
-        # Reproject sphere position 
+        # Reproject sphere position
         u_list, v_list, u0, v0 = get_reproject_pts(self.plot_panel.cam_cal,
                                                    self.plot_panel.radius,
                                                    self.plot_panel.sphere_pos)
-        
+
         self.plot_panel.update_reproj_points(u_list,v_list)
         self.plot_panel.update_center_points([u0],[v0])
         self.lock.release()
@@ -463,7 +463,7 @@ class SphereTrax_Class:
                                    wx.OK | wx.ICON_ERROR
                                    )
             dlg.ShowModal()
-            dlg.Destroy()            
+            dlg.Destroy()
             self.lock.acquire()
             self.tracking_enable = False
             self.lock.release()
@@ -503,7 +503,7 @@ class SphereTrax_Class:
             self.tracking_enable_box.SetValue(False)
             return
 
-        
+
         self.lock.acquire()
         widget = event.GetEventObject()
         if widget.IsChecked():
@@ -528,7 +528,7 @@ class SphereTrax_Class:
         #####################################################################
         if not self.tracking_enable:
             return
-        
+
         try:
             while not self.tracking_plot_queue.empty():
                 data = self.tracking_plot_queue.get(False)
@@ -553,7 +553,7 @@ class SphereTrax_Class:
         x_axis = (-TRACKING_DEFAULTS['tracking_plot_length'], 0)
         color = TRACKING_DEFAULTS['tracking_plot_line_color']
         width = TRACKING_DEFAULTS['tracking_plot_line_width']
-        
+
         # Plot heading rate data
         data = [(t-t_last,h) for t,h,f,s in self.tracking_plot_data]
         line = wx.lib.plot.PolyLine(data, legend='', colour=color, width=width)
@@ -567,7 +567,7 @@ class SphereTrax_Class:
         gc = wx.lib.plot.PlotGraphics([line], 'forward velocity', '', '(mm/s)')
         self.forw_rate_canvas.Draw(gc, xAxis=x_axis, yAxis=(-10,10))
         #fr = data[-1][1]
-        
+
 
         # Plot side velocity data
         data = [(t-t_last,s) for t,h,f,s in self.tracking_plot_data]
@@ -592,7 +592,7 @@ class SphereTrax_Class:
     def remote_hosts_changed(self):
         listctrl = xrc.XRCCTRL(self.edit_udp_receivers_dlg,"UDP_RECEIVER_LIST")
         n = listctrl.GetCount()
-        
+
         self.remote_host_lock.acquire()
         try:
             if n > 0:
@@ -633,13 +633,13 @@ class SphereTrax_Class:
                         toshow = str(ip)
                     idx = listctrl.Append( toshow )
                     listctrl.SetClientData(idx,remote_host)
-                    self.remote_hosts_changed()                    
+                    self.remote_hosts_changed()
         finally:
             dlg.Destroy()
 
     def OnUDPEdit(self,event):
         widget = event.GetEventObject()
-        
+
     def OnUDPRemove(self,event):
         listctrl = xrc.XRCCTRL(self.edit_udp_receivers_dlg,"UDP_RECEIVER_LIST")
         idx = listctrl.GetSelection()
@@ -648,9 +648,9 @@ class SphereTrax_Class:
         remote_host = listctrl.GetClientData(idx)
         listctrl.Delete(idx)
         self.remote_hosts_changed()
-        
-    
-    # Other frame processing, Andrew's stuff, etc -------------------------         
+
+
+    # Other frame processing, Andrew's stuff, etc -------------------------
     def get_frame(self):
         """return wxPython frame widget"""
         return self.frame
@@ -659,8 +659,8 @@ class SphereTrax_Class:
         """
         """
         return 'SphereTrax'
-    
-    def process_frame(self,cam_id,buf,buf_offset,timestamp,framenumber):        
+
+    def process_frame(self,cam_id,buf,buf_offset,timestamp,framenumber):
         """
         do work on each frame
         This function gets called on every single frame capture. It is
@@ -671,7 +671,7 @@ class SphereTrax_Class:
         # Empty pixel displacement list
         self.dpix_list = []
 
-        # Get varibles which are shared with GUI thread 
+        # Get varibles which are shared with GUI thread
         self.lock.acquire()
         optic_flow_enable = self.optic_flow_enable
         tracking_enable = self.tracking_enable
@@ -691,7 +691,7 @@ class SphereTrax_Class:
         # Get image buffer information
         buf = numpy.asarray(buf)
         n,m = buf.shape
-        
+
         if not self.lag_buf.is_ready() or not optic_flow_enable:
             # Buffer is not ready or optic flow is not enabled
             self.of_pix = []
@@ -699,11 +699,11 @@ class SphereTrax_Class:
         else:
             # Get pixels for optic flow computation
             self.of_pix = get_optic_flow_pix(num_row,num_col,horiz_space,horiz_pos,
-                                             vert_space,vert_pos,(0,m),(0,n),wnd)            
+                                             vert_space,vert_pos,(0,m),(0,n),wnd)
             t_start = time.time()
             if timestamp - self.timestamp_last >= poll_int:
 
-                # Perform optic flow computation for each pixel in pixel list 
+                # Perform optic flow computation for each pixel in pixel list
                 self.line_list = []
                 for pix in self.of_pix:
                     im_curr = buf
@@ -714,17 +714,17 @@ class SphereTrax_Class:
                     scal = 0.25
                     self.line_list.append([pix[0],pix[1],pix[0]-scal*dpix[0],pix[1]-scal*dpix[1]])
                 # Perform Tracking if enabled
-                
-                if tracking_enable: 
+
+                if tracking_enable:
                     #####################################################################
                     # Will want to check that the appropriate conditions for tracking
                     # or disable all possible changes to these conditions when tracking
                     # is enabled. These include: optic flow enable, sphere position, and
-                    # number of optic flow computation points.                    
+                    # number of optic flow computation points.
                     #####################################################################
 
                     # Compute angular velocity
-                    
+
                     omega = get_ang_vel(self.of_pix, self.dpix_list, cam_cal, sphere_radius,
                                         sphere_pos)
 
@@ -733,8 +733,8 @@ class SphereTrax_Class:
                     state_filt, error = self.kalman.step(omega,isinitial=self.kalman_isinitial)
                     self.kalman_isinitial = 0
                     omega_filt = state_filt[0:3]
-                    
-                    
+
+
                     # Compute heading rate, forward and side velocities
                     #head_rate, forw_rate, side_rate = get_hfs_rates(omega,SPHERE_ORIENTATION,
                     #                                                sphere_radius)
@@ -764,24 +764,24 @@ class SphereTrax_Class:
                         for remote_host in self.runthread_remote_host:
                             self.sockobj.sendto(databuf, remote_host)
 
-                    
+
                 #Record timestamp of last optic flow calculation
                 self.timestamp_last = timestamp
-                
+
         draw_points = self.of_pix
         draw_linesegs = self.line_list
         self.lag_buf.add((numpy.array(buf,copy=True), timestamp))
         return draw_points, draw_linesegs
-    
-    def set_view_flip_LR( self, val ):            
+
+    def set_view_flip_LR( self, val ):
         pass
 
     def set_view_rotate_180( self, val):
         pass
-    
+
     def quit(self):
         pass
-    
+
     def camera_starting_notification(self,cam_id,
                                      pixel_format=None,
                                      max_width=None,
@@ -796,22 +796,22 @@ class PlotPanel(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
 
         # Create figure and canvas
-        self.fig = Figure(figsize=(0.1,0.1))        
+        self.fig = Figure(figsize=(0.1,0.1))
         self.canvas = FigureCanvasWxAgg(self, -1, self.fig)
-        
+
         # Allow resizing
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.canvas, 1, wx.GROW|wx.TOP|wx.LEFT)
         self.SetSizer(sizer)
         self.Fit()
 
-        # Setup axes 
+        # Setup axes
         self.axes = self.fig.add_subplot(111)
         self.axes.set_visible(False)
         self.im = None
 
         # Connect button press event
-        self.canvas.mpl_connect('button_press_event',self.on_button_press) 
+        self.canvas.mpl_connect('button_press_event',self.on_button_press)
 
         # Setup lines
         self.input_line = self.axes.plot([],[],'.b')[0]
@@ -821,16 +821,16 @@ class PlotPanel(wx.Panel):
         # Sphere position
         self.sphere_pos = None
         self.extent = (0,0,0,0)
-        
+
         # Load camera calibration and sphere data
         cam_cal_file = pkg_resources.resource_filename(__name__,
                                                        'data/camera_cal.txt')
         self.cam_cal = load_cam_cal(cam_cal_file)
-        
+
         sphere_data_file = pkg_resources.resource_filename(__name__,
                                                            'data/sphere_defaults.txt')
         self.radius, self.z_guess = load_sphere_data(sphere_data_file)
-        
+
     def plot_data(self, buf):
         print 'plotting buffer'
         self.axes.cla()
@@ -844,7 +844,7 @@ class PlotPanel(wx.Panel):
         self.axes.imshow(plot_buf,
                          cmap=matplotlib.cm.pink,
                          origin='upper',
-                         extent=extent)  
+                         extent=extent)
 
         self.axes.add_line(self.input_line)
         self.axes.add_line(self.reproj_line)
@@ -865,7 +865,7 @@ class PlotPanel(wx.Panel):
         self.input_line.set_data(xdata,ydata)
         self.canvas.draw()
 
-            
+
     def delete_points(self):
         self.input_line.set_data([],[])
         self.reproj_line.set_data([],[])
@@ -909,7 +909,7 @@ def load_sphere_data(filename):
             z_guess = float(line[1])
     fid.close()
     return radius, z_guess
-    
+
 def find_sphere_pos(cal, radius, z_guess, pts ):
     """
     Computes the position of the center of the sphere
@@ -940,7 +940,7 @@ def get_reproject_pts(cal, radius, pos, n=100):
     """
     Using camera calibration and extimated sphere position get
     points reprojected from the surface of the sphere and the sphere's
-    center. 
+    center.
     """
     f0,f1,c0,c1 = cal
     # Get point from sphere's surfacE
@@ -959,7 +959,7 @@ def get_reproject_pts(cal, radius, pos, n=100):
     u0 = f0*pos[0]/pos[2] + c0
     v0 = f1*pos[1]/pos[2] + c1
     return u_list, v_list, u0, v0
-    
+
 
 def get_slider_value(widget):
     """
@@ -978,7 +978,7 @@ def set_slider_value(widget,value):
     slider_min = widget.GetMin()
     slider_max = widget.GetMax()
     slider_range = slider_max - slider_min
-    widget.SetValue(int(slider_min + value*slider_range)) 
+    widget.SetValue(int(slider_min + value*slider_range))
 
 
 def get_optic_flow_pix(num_row, num_col, horiz_space, horiz_pos, vert_space,
@@ -1015,17 +1015,17 @@ def get_optic_flow_pix(num_row, num_col, horiz_space, horiz_pos, vert_space,
                 y_pix = vert_space*y_range*y_ind/float(num_row-1) + y_min
                 y_pix = y_pix + y_range*(1.0-vert_space)*vert_pos
             y_pix = y_limits[1]-y_pix
-            
+
             of_pix.append((x_pix, y_pix))
 
     return of_pix
-                         
+
 
 class LagList:
 
     def __init__(self, len):
         self.len = len
-        self.list = [] 
+        self.list = []
 
     def add(self, x):
         self.list.insert(0,x)
@@ -1034,7 +1034,7 @@ class LagList:
 
     def val(self):
         return self.list[-1]
-        
+
     def is_ready(self):
         if len(self.list) == self.len:
             return True
