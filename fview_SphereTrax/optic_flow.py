@@ -34,7 +34,7 @@ def lsq_deriv(a):
     """
     Least squares partial derivative
     """
-    
+
     ### Could this be sped up by doing multiplication in Fourier
     ### domain?
 
@@ -43,7 +43,7 @@ def lsq_deriv(a):
     # to double check this. - ADS 20071102
 
     # array size error fixed by WBD 20071207
-    
+
     a_x = -scipy.ndimage.convolve(a,X_KERNEL,mode='constant')
     a_y = scipy.ndimage.convolve(a,Y_KERNEL,mode='constant')
     return a_x, a_y
@@ -57,7 +57,7 @@ def get_optic_flow(im0,im1,pix,wnd,dt):
         im1 -- image 1
         pix -- pixel locations
         wnd -- computation window
-        dt  -- time step between images        
+        dt  -- time step between images
     """
     # Get index location of pixel
     i0,i1 = pix[1], pix[0]
@@ -70,13 +70,13 @@ def get_optic_flow(im0,im1,pix,wnd,dt):
     E1_w_bndry = nx.asarray(E1_w_bndry, nx.Float32)
     E0 = nx.asarray(E0, nx.Float32)
     E1 = E1_w_bndry[2:-2,2:-2]
-    
+
     # Gaussian Filter
     #std = 1.5
     #E1_w_bndry = gaussian_filter(E1_w_bndry,std)
     #E1 = E1_w_bndry[2:-2,2:-2]
     #E0 = gaussian_filter(E0, std)
-    
+
     # Get time derivatives
     dE_dt = (E1-E0)/dt
 
@@ -84,12 +84,12 @@ def get_optic_flow(im0,im1,pix,wnd,dt):
     Ex_w_bndry, Ey_w_bndry = lsq_deriv(E1_w_bndry)
     Ex = Ex_w_bndry[2:-2,2:-2]
     Ey = Ey_w_bndry[2:-2,2:-2]
- 
+
 
     # Create Problem matrices
     n = 2*wnd+1
     A = nx.concatenate((nx.ravel(Ex)[:,None], nx.ravel(Ey)[:,None]), axis=1)
-    b = -nx.ravel(dE_dt) 
+    b = -nx.ravel(dE_dt)
 
     ## Solution method 1 (fastest?) ------------------------
     #At = nx.transpose(A)
@@ -99,20 +99,20 @@ def get_optic_flow(im0,im1,pix,wnd,dt):
     #    x = solve(AtA,Atb)
     #except:
     #    x = nx.array([0.0,0.0])
-    
+
     # Solution method 2 ------------------------------------
     # New method
     x,resids,rank,s = scipy.linalg.lstsq(A,b)
-    
+
     return x[0], x[1]
 
-    
+
 # ----------------------------------------------------------------------
 def get_ang_vel(img_pts, img_dpix, cal, radius, sphere_pos):
     """
     Compute angular velocity vector of the sphere given a set of pixel
     displacement velocities and the corresponding image coordinates.
-    
+
     """
     n = len(img_pts)
     f0,f1,c0,c1 = cal
@@ -123,9 +123,9 @@ def get_ang_vel(img_pts, img_dpix, cal, radius, sphere_pos):
         #print p
         q = img2sphere(p,cal,radius,sphere_pos)
         if q == None:
-            # If image point is off sphere just return zero 
+            # If image point is off sphere just return zero
             return 0.0, 0.0, 0.0
-    
+
         sph_pts.append(q)
 
     # Create problem vector and matrix
@@ -144,7 +144,7 @@ def get_ang_vel(img_pts, img_dpix, cal, radius, sphere_pos):
 
         # Point on sphere corresponding to image point
         x,y,z = sph_pts[j]
-        
+
         if i%2 == 0:
             A[i,0] = -u*(y-b)
             A[i,1] = (z-c) + u*(x-a)
@@ -175,9 +175,9 @@ def img2sphere(img_pt,cal,radius,sphere_pos):
     # Check if there is a solution
     root_term = B**2 - 4.0*A*C
     if root_term < 0.0:
-        return None 
+        return None
     else:
-        # Get near solution (smallest z value) 
+        # Get near solution (smallest z value)
         z = (-B - numpy.sqrt(root_term))/(2.0*A)
         x = p[0]*z
         y = p[1]*z
@@ -188,7 +188,7 @@ def get_hfs_rates(w,orient_vecs,sphere_raduis):
     """
     Calculate the heading, forward and side rates/velocities
     given the angular velocity, the orientation basis vectors,
-    and the raduis of the sphere. 
+    and the raduis of the sphere.
     """
     u_vec, f_vec, s_vec = orient_vecs
     fly_pos = sphere_raduis*u_vec
