@@ -38,10 +38,6 @@ def lsq_deriv(a):
     ### Could this be sped up by doing multiplication in Fourier
     ### domain?
 
-    # XXX Note: switching from numarray to scipy convolve
-    # implementation probably switched the calling conventions. Need
-    # to double check this. - ADS 20071102
-
     # array size error fixed by WBD 20071207
 
     a_x = -scipy.ndimage.convolve(a,X_KERNEL,mode='constant')
