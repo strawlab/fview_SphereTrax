@@ -380,28 +380,28 @@ class SphereTrax_Class:
         self.lock.acquire()
         widget = event.GetEventObject()
         self.horiz_space = get_slider_value(widget)
-        print 'horiz_space_slider: ', self.horiz_space
+#        print 'horiz_space_slider: ', self.horiz_space
         self.lock.release()
 
     def on_horiz_position_slider(self, event):
         self.lock.acquire()
         widget = event.GetEventObject()
         self.horiz_pos = get_slider_value(widget)
-        print 'horiz_position_slider: ', self.horiz_pos
+#        print 'horiz_position_slider: ', self.horiz_pos
         self.lock.release()
 
     def on_vert_space_slider(self, event):
         self.lock.acquire()
         widget = event.GetEventObject()
         self.vert_space = get_slider_value(widget)
-        print 'vert_space_slider:', self.vert_space
+#        print 'vert_space_slider:', self.vert_space
         self.lock.release()
 
     def on_vert_position_slider(self, event):
         self.lock.acquire()
         widget = event.GetEventObject()
         self.vert_pos = get_slider_value(widget)
-        print 'vert_position_slider:', self.vert_pos
+#        print 'vert_position_slider:', self.vert_pos
         self.lock.release()
 
     # Callbacks for find sphere page ------------------------------------------
@@ -691,6 +691,7 @@ class SphereTrax_Class:
         # Get image buffer information
         buf = numpy.asarray(buf)
         n,m = buf.shape
+        m_off, n_off = buf_offset
 
         if not self.lag_buf.is_ready() or not optic_flow_enable:
             # Buffer is not ready or optic flow is not enabled
@@ -698,10 +699,13 @@ class SphereTrax_Class:
             self.line_list = []
         else:
             # Get pixels for optic flow computation
-            self.of_pix = get_optic_flow_pix(num_row,num_col,horiz_space,horiz_pos,
-                                             vert_space,vert_pos,(0,m),(0,n),wnd)
+            self.of_pix = get_optic_flow_pix(num_row,num_col,
+                                             horiz_space,horiz_pos,
+                                             vert_space,vert_pos,
+                                             (m_off,m_off+m),(n_off,n_off+n),wnd)
             t_start = time.time()
             if timestamp - self.timestamp_last >= poll_int:
+#                print "time", t_start, "of_pix", self.of_pix, "wind", wnd
 
                 # Perform optic flow computation for each pixel in pixel list
                 self.line_list = []
@@ -712,9 +716,12 @@ class SphereTrax_Class:
                     dpix = get_optic_flow(im_curr,im_prev,pix,wnd,dt)
                     self.dpix_list.append(dpix)
                     scal = 0.25
-                    self.line_list.append([pix[0],pix[1],pix[0]-scal*dpix[0],pix[1]-scal*dpix[1]])
+                    self.line_list.append([pix[0]+m_off,
+                                           pix[1]+n_off,
+                                           pix[0]-scal*dpix[0]+m_off,
+                                           pix[1]-scal*dpix[1]+n_off])
+                    
                 # Perform Tracking if enabled
-
                 if tracking_enable:
                     #####################################################################
                     # Will want to check that the appropriate conditions for tracking
@@ -724,7 +731,6 @@ class SphereTrax_Class:
                     #####################################################################
 
                     # Compute angular velocity
-
                     omega = get_ang_vel(self.of_pix, self.dpix_list, cam_cal, sphere_radius,
                                         sphere_pos)
 
@@ -768,8 +774,8 @@ class SphereTrax_Class:
                 #Record timestamp of last optic flow calculation
                 self.timestamp_last = timestamp
 
-        draw_points = self.of_pix
-        draw_linesegs = self.line_list
+        draw_points = [(m+m_off,n+n_off) for (m,n) in self.of_pix]
+        draw_linesegs = self.line_list # already corrected
         self.lag_buf.add((numpy.array(buf,copy=True), timestamp))
         return draw_points, draw_linesegs
 
@@ -984,7 +990,7 @@ def set_slider_value(widget,value):
 def get_optic_flow_pix(num_row, num_col, horiz_space, horiz_pos, vert_space,
                        vert_pos, x_limits, y_limits, wnd):
     """
-    Get list of pixel corrdinates for the opticflow computation
+    Get list of pixel coordinates for the opticflow computation
     """
 
     # Determine allowable region accounting for optix flow window

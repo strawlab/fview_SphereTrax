@@ -47,7 +47,7 @@
                 <object class="notebookpage">
                   <label>Optic Flow</label>
                   <object class="wxPanel" name="Optic_Flow_PANEL">
-                    <style></style>
+                    <style/>
                     <object class="wxFlexGridSizer">
                       <cols>1</cols>
                       <rows>4</rows>
@@ -58,7 +58,7 @@
                           <object class="spacer">
                             <size>10,10</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxCheckBox" name="Optic_Flow_Enable_CHECKBOX">
@@ -79,35 +79,35 @@
                           <object class="spacer">
                             <size>0,10</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>0,0</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>0,0</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>0,0</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>0,0</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxStaticText">
                               <label>Number of rows</label>
-                              <style></style>
+                              <style/>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                             <border>50</border>
                           </object>
                           <object class="sizeritem">
@@ -116,19 +116,19 @@
                               <min>1</min>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>40,30</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxStaticText">
                               <label>Number of columns</label>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxSpinCtrl" name="Num_Col_SPINCTRL">
@@ -136,14 +136,13 @@
                               <min>1</min>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxStaticText">
-                              <label>Window size</label>
+                              <label>Window size (pixels)</label>
                             </object>
                             <option>1</option>
-                            <flag></flag>
                           </object>
                           <object class="sizeritem">
                             <object class="wxSpinCtrl" name="Window_Size_SPINCTRL">
@@ -152,19 +151,18 @@
                               <max>100</max>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="spacer">
                             <size>40,30</size>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <object class="sizeritem">
                             <object class="wxStaticText">
-                              <label>Poll interval</label>
+                              <label>Poll interval (sec)</label>
                             </object>
                             <option>1</option>
-                            <flag></flag>
                           </object>
                           <object class="sizeritem">
                             <object class="wxTextCtrl" name="Poll_Interval_TEXTCTRL">
@@ -172,7 +170,7 @@
                               <style>wxTE_PROCESS_ENTER</style>
                             </object>
                             <option>1</option>
-                            <flag></flag>
+                            <flag/>
                           </object>
                           <vgap>10</vgap>
                           <hgap>10</hgap>
@@ -184,7 +182,7 @@
                       <object class="spacer">
                         <size>10,60</size>
                         <option>1</option>
-                        <flag></flag>
+                        <flag/>
                       </object>
                       <object class="sizeritem">
                         <object class="wxFlexGridSizer">
@@ -205,18 +203,18 @@
                               <object class="sizeritem">
                                 <object class="wxSlider" name="Horiz_Space_SLIDER">
                                   <value>50</value>
-                                  <min></min>
+                                  <min/>
                                   <max>100</max>
                                   <size>250,30</size>
                                   <style>wxSL_AUTOTICKS</style>
                                 </object>
                                 <option>1</option>
-                                <flag></flag>
+                                <flag/>
                               </object>
                               <object class="spacer">
                                 <size>20,70</size>
                                 <option>1</option>
-                                <flag></flag>
+                                <flag/>
                               </object>
                               <object class="sizeritem">
                                 <object class="wxStaticText">
@@ -229,12 +227,12 @@
                               <object class="sizeritem">
                                 <object class="wxSlider" name="Horiz_Position_SLIDER">
                                   <value>50</value>
-                                  <min></min>
+                                  <min/>
                                   <max>100</max>
                                   <size>250,30</size>
                                 </object>
                                 <option>1</option>
-                                <flag></flag>
+                                <flag/>
                               </object>
                             </object>
                             <option>1</option>
@@ -259,7 +257,7 @@
                               <object class="spacer">
                                 <size>30,20</size>
                                 <option>1</option>
-                                <flag></flag>
+                                <flag/>
                               </object>
                               <object class="sizeritem">
                                 <object class="wxStaticText">
@@ -272,7 +270,7 @@
                               <object class="sizeritem">
                                 <object class="wxSlider" name="Vert_Space_SLIDER">
                                   <value>50</value>
-                                  <min></min>
+                                  <min/>
                                   <max>100</max>
                                   <size>30,150</size>
                                   <style>wxSL_VERTICAL|wxSL_INVERSE</style>
@@ -283,12 +281,12 @@
                               <object class="spacer">
                                 <size>30,20</size>
                                 <option>1</option>
-                                <flag></flag>
+                                <flag/>
                               </object>
                               <object class="sizeritem">
                                 <object class="wxSlider" name="Vert_Position_SLIDER">
                                   <value>50</value>
-                                  <min></min>
+                                  <min/>
                                   <max>100</max>
                                   <size>30,150</size>
                                   <style>wxSL_VERTICAL|wxSL_INVERSE</style>
@@ -326,7 +324,7 @@
                           <orient>wxVERTICAL</orient>
                           <object class="sizeritem">
                             <object class="wxPanel" name="Find_Sphere_Image_PANEL">
-                              <style></style>
+                              <style/>
                             </object>
                             <option>1</option>
                             <flag>wxEXPAND|wxGROW|wxALIGN_CENTRE</flag>
